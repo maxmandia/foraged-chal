@@ -1,4 +1,6 @@
-export default function isEven(char: string): boolean {
+export default function isEven(char: string): boolean | null {
+  if (char === " ") return null;
+
   const lowerChar = char.toLowerCase();
   const charCode = lowerChar.charCodeAt(0);
 

@@ -3,48 +3,50 @@ export default function calculateStreak(string: string) {
   let prevCharEven = null;
   let startingStreakIndex = 0;
   let endingStreakIndex = 0;
+  let streakLength = 0;
   let longestStreakStart = 0;
   let longestStreakEnd = 0;
+  let longestStreakLength = 0;
 
   for (let i = 0; i < string.length; i++) {
-    if (string[i] === " ") continue;
+    let currentCharEven = isEven(string[i]);
+
+    // If the character is a space, keep the streak but do not increment streak length.
+    if (currentCharEven === null) continue;
 
     if (prevCharEven === null) {
-      prevCharEven = isEven(string[i]);
+      prevCharEven = currentCharEven;
+      streakLength = 1;
+      endingStreakIndex = i;
       continue;
     }
 
-    let currentCharEven = isEven(string[i]);
-
     if (prevCharEven == currentCharEven) {
-      endingStreakIndex = i; // continue the streak
+      streakLength++; // continue the streak
+      endingStreakIndex = i;
     } else {
       // the streak has ended, check if it is the longest
-      if (
-        endingStreakIndex - startingStreakIndex >
-        longestStreakEnd - longestStreakStart
-      ) {
+      if (streakLength > longestStreakLength) {
         longestStreakStart = startingStreakIndex;
-        longestStreakEnd = endingStreakIndex;
+        longestStreakLength = streakLength;
+        longestStreakEnd = endingStreakIndex; // Store end of the longest streak.
       }
       // start a new streak
       startingStreakIndex = i;
-      endingStreakIndex = i;
+      streakLength = 1;
       prevCharEven = currentCharEven;
     }
   }
 
   // check one last time if the last streak was the longest
-  if (
-    endingStreakIndex - startingStreakIndex >
-    longestStreakEnd - longestStreakStart
-  ) {
+  if (streakLength > longestStreakLength) {
     longestStreakStart = startingStreakIndex;
+    longestStreakLength = streakLength;
     longestStreakEnd = endingStreakIndex;
   }
 
   return {
-    streakLength: longestStreakEnd - longestStreakStart + 1,
+    streakLength: longestStreakLength,
     streakStart: longestStreakStart,
     streakEnd: longestStreakEnd,
   };

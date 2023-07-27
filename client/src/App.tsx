@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./App.css";
 
 interface ApiResponse {
@@ -35,8 +35,26 @@ function App() {
         autoFocus={true}
         value={inputText}
       />
+      <div contentEditable>{}</div>
       <h4>
         Longest even or odd streak: {response ? response.streakLength : 0}
+      </h4>
+      <h4 className="highlight-container">
+        {inputText.length > 0 &&
+          response &&
+          inputText.split("").map((char, index) => {
+            if (
+              index >= response.streakStart &&
+              index <= response.streakEnd &&
+              response.streakStart !== null
+            ) {
+              return (
+                <span key={index} className="highlight">
+                  {char}
+                </span>
+              );
+            }
+          })}
       </h4>
     </div>
   );

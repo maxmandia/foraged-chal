@@ -4,13 +4,28 @@ export default function calculateStreak(string: string) {
   let startingStreakIndex = 0;
   let endingStreakIndex = 0;
   let streakLength = 0;
-  let longestStreakStart = 0;
-  let longestStreakEnd = 0;
+  let longestStreakStart = null;
+  let longestStreakEnd = null;
   let longestStreakLength = 0;
 
+  // additional logic to prevent first character being non-alphabetic
+  if (
+    string.length === 1 &&
+    (!isNaN(parseInt(string[0])) || /\W/.test(string[0]))
+  ) {
+    return {
+      streakLength: 0,
+      streakStart: null,
+      streakEnd: null,
+    };
+  }
+
   for (let i = 0; i < string.length; i++) {
-    // If the character is a number, break the streak.
-    if (!isNaN(parseInt(string[i]))) {
+    // If the character is non-alphabetic, break the streak.
+    if (
+      !isNaN(parseInt(string[i])) ||
+      (/\W/.test(string[i]) && string[i] != " ")
+    ) {
       // the streak has ended, check if it is the longest
       if (streakLength > longestStreakLength) {
         longestStreakStart = startingStreakIndex;

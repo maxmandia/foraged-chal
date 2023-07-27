@@ -17,3 +17,14 @@
 .app-container h4 {
   margin-top: 20px;
 }
+
+.highlight-container {
+  height: 20px;
+}
+
+.highlight {
+  font-size: 18px;
+
+  background-color: yellow;
+  color: black;
+}

@@ -35,7 +35,6 @@ function App() {
         autoFocus={true}
         value={inputText}
       />
-      <div contentEditable>{}</div>
       <h4>
         Longest even or odd streak: {response ? response.streakLength : 0}
       </h4>

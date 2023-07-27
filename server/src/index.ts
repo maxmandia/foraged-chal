@@ -1,6 +1,7 @@
 import express from "express";
 import calculateStreak from "./helpers/calculate-streak";
 import cors from "cors";
+
 const app = express();
 app.use(cors());
 
@@ -8,7 +9,7 @@ app.get("/check-string", (req, res) => {
   const { string } = req.query;
 
   if (typeof string !== "string") {
-    res.status(400).send("String must be of type string");
+    res.status(400).send("Query param must be of type string");
     return;
   }
 

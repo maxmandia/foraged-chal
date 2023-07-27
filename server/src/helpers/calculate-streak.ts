@@ -1,4 +1,5 @@
 import isEven from "./is-even";
+
 export default function calculateStreak(string: string) {
   let prevCharEven = null;
   let startingStreakIndex = 0;
@@ -44,6 +45,7 @@ export default function calculateStreak(string: string) {
     // If the character is a space, keep the streak but do not increment streak length.
     if (currentCharEven === null) continue;
 
+    // If this is the first character, start a new streak.
     if (prevCharEven === null) {
       prevCharEven = currentCharEven;
       streakLength = 1;
@@ -51,6 +53,7 @@ export default function calculateStreak(string: string) {
       continue;
     }
 
+    // If the current character is the same as the previous character, continue the streak.
     if (prevCharEven == currentCharEven) {
       streakLength++; // continue the streak
       endingStreakIndex = i;

@@ -1,10 +1,10 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import "./App.css";
 
 interface ApiResponse {
   streakLength: number;
-  streakStart: number;
-  streakEnd: number;
+  streakStart: number | null;
+  streakEnd: number | null;
 }
 
 function App() {
@@ -17,7 +17,6 @@ function App() {
         `http://localhost:3001/check-string?string=${text}`
       );
       const data: ApiResponse = await res.json();
-      console.log(data);
       setResponse(data);
     } catch (error) {
       console.log(error);
@@ -35,17 +34,20 @@ function App() {
         autoFocus={true}
         value={inputText}
       />
-      <h4>
-        Longest even or odd streak: {response ? response.streakLength : 0}
-      </h4>
+      <h4>Longest even or odd streak: {response?.streakLength ?? 0}</h4>
       <h4 className="highlight-container">
         {inputText.length > 0 &&
           response &&
           inputText.split("").map((char, index) => {
+            // If the response is null, it's non alphabetical. We won't display anything.
+            if (response.streakStart === null || response.streakEnd === null) {
+              return;
+            }
+            // Making sure the index of the current char is within the streak range.
             if (
+              response &&
               index >= response.streakStart &&
-              index <= response.streakEnd &&
-              response.streakStart !== null
+              index <= response.streakEnd
             ) {
               return (
                 <span key={index} className="highlight">

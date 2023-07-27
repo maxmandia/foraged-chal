@@ -1,7 +1,6 @@
 export default function isEven(char: string): boolean | null {
   if (char === " ") return null;
 
-  // make sure it matter if the letter is upper or lower case
   const lowerCaseChar = char.toLowerCase();
   const charCode = lowerCaseChar.charCodeAt(0);
 

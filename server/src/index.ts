@@ -12,15 +12,6 @@ app.get("/check-string", (req, res) => {
     return;
   }
 
-  // if (string.length === 0) {
-  //   res.json({
-  //     streakLength: 0,
-  //     streakStart: 0,
-  //     streakEnd: 0,
-  //   });
-  //   return;
-  // }
-
   let result = calculateStreak(string);
   res.json(result);
 });

@@ -9,6 +9,21 @@ export default function calculateStreak(string: string) {
   let longestStreakLength = 0;
 
   for (let i = 0; i < string.length; i++) {
+    // If the character is a number, break the streak.
+    if (!isNaN(parseInt(string[i]))) {
+      // the streak has ended, check if it is the longest
+      if (streakLength > longestStreakLength) {
+        longestStreakStart = startingStreakIndex;
+        longestStreakLength = streakLength;
+        longestStreakEnd = endingStreakIndex; // Store end of the longest streak.
+      }
+      // start a new streak
+      prevCharEven = null;
+      startingStreakIndex = i + 1;
+      streakLength = 0;
+      continue;
+    }
+
     let currentCharEven = isEven(string[i]);
 
     // If the character is a space, keep the streak but do not increment streak length.
